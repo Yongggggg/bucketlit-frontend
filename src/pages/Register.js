@@ -33,9 +33,8 @@ export default class Register extends React.Component {
             },
         })
             .then(response => {
-                console.log(response)
                 if (response.data.status === "success") {
-                    return <Redirect to='/login/' />
+                    console.log(response)
                 } else {
                     console.log("failed")
                 }

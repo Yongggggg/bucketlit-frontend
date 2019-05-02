@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ListGroup, ListGroupItem, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Row, Col, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import axios from 'axios';
 
 
@@ -8,31 +8,35 @@ class BucketList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            bucket_lists: [
-                { "title": "Let's go Paris", "category": "Travel", "complete": false },
-                { "title": "Kiss a guy", "category": "Life", "complete": false },
-                { "title": "Go clubbing", "category": "Life", "complete": false }
-            ],
+            bucket_lists: [],
             modal: false,
+            title: '',
+            category: '',
+            completed_by: '',
+            description: '',
         };
         this.toggle = this.toggle.bind(this);
     }
 
     componentDidMount() {
         const token = localStorage.getItem('token');
+
         axios({
             method: 'GET',
-            url: 'https://localhost:5000/api/v1/bucketlist/',
+            url: 'http://localhost:5000/api/v1/bucketlists/',
             headers: {
                 'Authorization': `Bearer ${token}`
             }
-
-        }).then(response => {
-            this.setState({
-                bucket_lists: response.data
-            })
         })
-
+            .then(response => {
+                this.setState({
+                    bucket_lists: response.data.items
+                })
+                console.log(this.state.bucket_lists)
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     toggle() {
@@ -41,10 +45,36 @@ class BucketList extends React.Component {
         }));
     }
 
-    handleClick = () => {
+    handleInput = (event) => {
         this.setState({
-            modal: true
+            [event.target.id]: event.target.value
         })
+    }
+
+    handleSubmit = (event) => {
+        event.preventDefault();
+        const token = localStorage.getItem('token');
+
+        axios({
+            method: 'POST',
+            url: 'http://localhost:5000/api/v1/bucketlists/',
+            data: {
+                title: this.state.title,
+                category: this.state.category,
+                completed_by: this.state.completed_by,
+                description: this.state.description,
+            },
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                console.log(response)
+                window.location.reload()
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     render() {
@@ -67,6 +97,7 @@ class BucketList extends React.Component {
                                     name="title"
                                     id="title"
                                     placeholder="Title"
+                                    onChange={this.handleInput}
                                 />
                             </FormGroup>
                             <FormGroup>
@@ -74,13 +105,14 @@ class BucketList extends React.Component {
                                 <Input
                                     type="date"
                                     name="date"
-                                    id="exampleDate"
+                                    id="completed_by"
                                     placeholder="date placeholder"
+                                    onChange={this.handleInput}
                                 />
                             </FormGroup>
                             <FormGroup>
                                 <Label for="category">Category</Label>
-                                <Input type="select" name="select" id="exampleSelect">
+                                <Input type="select" name="select" id="category" onChange={this.handleInput}>
                                     <option>Lifestyle</option>
                                     <option>Self-Care</option>
                                     <option>Self-Satisfaction</option>
@@ -96,7 +128,7 @@ class BucketList extends React.Component {
                         </Form>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="primary" onClick={this.toggle}>Add to List</Button>
+                        <Button color="primary" onClick={this.handleSubmit}>Add to List</Button>
                         <Button color="secondary" onClick={this.toggle}>Cancel</Button>
                     </ModalFooter>
                 </Modal>
