@@ -4,6 +4,7 @@ import axios from 'axios';
 import JournalNew from '../containers/JournalNew';
 import ItemEdit from '../containers/ItemEdit';
 import moment from 'moment';
+import Navigation from '../components/Navigation';
 
 const token = localStorage.getItem('token');
 
@@ -22,12 +23,14 @@ class Item extends React.Component {
     }
 
     toggleNew() {
+        // Toggle "Add New Journal" Modal
         this.setState(prevState => ({
             newModal: !prevState.newModal
         }));
     }
 
     toggleEdit() {
+        // Toggle "Edit" Modal
         this.setState(prevState => ({
             editModal: !prevState.editModal
         }));
@@ -36,6 +39,7 @@ class Item extends React.Component {
     componentDidMount() {
 
         axios({
+            // GET Item Data 
             method: 'GET',
             url: `http://localhost:5000/api/v1/items/${this.props.match.params.id}/`,
             headers: {
@@ -46,6 +50,7 @@ class Item extends React.Component {
                 this.setState({
                     item: response.data.item[0]
                 })
+                console.log(this.state.item)
             })
             .catch(error => {
                 console.log(error);
@@ -53,6 +58,7 @@ class Item extends React.Component {
 
 
         axios({
+            // GET Journal Data
             method: 'GET',
             url: `http://localhost:5000/api/v1/journals/${this.props.match.params.id}/`,
             headers: {
@@ -91,31 +97,37 @@ class Item extends React.Component {
 
     render() {
         return (
-            <div className="container">
-                <Button className="float-right" onClick={this.toggleEdit} color="primary">Edit</Button>
-                <ItemEdit isOpen={this.state.editModal} toggleEdit={this.toggleEdit} item_id={this.props.match.params.id} />
-                <h1>{this.state.item.title}</h1>
-                <h4>{moment(this.state.item.start_by).format('ll')}</h4>
-                <p>{this.state.item.category}</p>
-                <p>{this.state.item.description}</p>
-                <Button onClick={this.toggleNew} color="primary">Add New Journal</Button>
-                <JournalNew isOpen={this.state.newModal} toggleNew={this.toggleNew} item_id={this.props.match.params.id} />
-                <hr />
-                <CardColumns>
-                    {this.state.journals.map(journal =>
-                        <>
-                            <Card body className="text-center">
-                                <CardHeader>
-                                    {journal.title} <br />
-                                    {moment(journal.date).format("LL")}
-                                </CardHeader>
-                                <CardText>{journal.reflection}</CardText>
-                                <Button outline color="danger" onClick={this.handleDelete} data-journal_id={journal.id}>Delete</Button>
-                            </Card>
-                        </>
-                    )}
-                </CardColumns >
-            </div>
+            <>
+                <Navigation />
+                <div className="container-fluid">
+
+                    <h1>{this.state.item.title} <Button size="sm" onClick={this.toggleEdit} color="primary">Edit</Button></h1>
+                    <ItemEdit isOpen={this.state.editModal} toggleEdit={this.toggleEdit} item_id={this.props.match.params.id} />
+
+                    <h4>{moment(this.state.item.start_by).format('ll')} - {moment(this.state.item.completed_by).format('ll')}</h4>
+                    <p>{this.state.item.category}</p>
+                    <p>{this.state.item.description}</p>
+
+                    <Button onClick={this.toggleNew} color="primary">Add New Journal</Button>
+                    <JournalNew isOpen={this.state.newModal} toggleNew={this.toggleNew} item_id={this.props.match.params.id} />
+                    <hr />
+
+                    <CardColumns>
+                        {this.state.journals.map(journal =>
+                            <>
+                                <Card body className="text-center">
+                                    <CardHeader>
+                                        {journal.title} <br />
+                                        {moment(journal.date).format("LL")}
+                                    </CardHeader>
+                                    <CardText>{journal.reflection}</CardText>
+                                    <Button outline color="danger" onClick={this.handleDelete} data-journal_id={journal.id}>Delete</Button>
+                                </Card>
+                            </>
+                        )}
+                    </CardColumns >
+                </div >
+            </>
         )
     }
 }

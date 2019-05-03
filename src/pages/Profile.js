@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-
+import Navigation from '../components/Navigation'
 
 class Profile extends React.Component {
     constructor(props) {
@@ -30,13 +30,16 @@ class Profile extends React.Component {
 
     render() {
         return (
-            <div className="text-center">
-                <h2>{this.state.firstName} {this.state.lastName},</h2>
-                <br />
-                <h2>You have been living for</h2>
-                <h1>{this.state.countdown}</h1>
-                <h2>days</h2>
-            </div>
+            <>
+                <Navigation />
+                <div className="text-center">
+                    <h2>{this.state.firstName} {this.state.lastName},</h2>
+                    <br />
+                    <h2>You have been living for</h2>
+                    <h1>{this.state.countdown}</h1>
+                    <h2>days</h2>
+                </div>
+            </>
         )
 
     }

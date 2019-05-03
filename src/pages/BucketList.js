@@ -2,7 +2,7 @@ import React from 'react';
 import { ListGroup, ListGroupItem, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import axios from 'axios';
-
+import Navigation from '../components/Navigation';
 
 
 class BucketList extends React.Component {
@@ -90,6 +90,7 @@ class BucketList extends React.Component {
     render() {
         return (
             <>
+            <Navigation />
                 <ListGroup>
                     <ListGroupItem><Button onClick={this.toggle} className="float-right" color="primary">New</Button><h1>My Bucket List</h1></ListGroupItem>
                     {this.state.bucket_lists.map(item =>

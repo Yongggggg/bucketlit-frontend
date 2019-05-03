@@ -42,7 +42,6 @@ class ItemEdit extends React.Component {
                     completed_by: response.data.item[0].completed_by,
                     complete: response.data.item[0].complete
                 })
-                console.log(this.state)
             })
             .catch(error => {
                 console.log(error);
@@ -75,6 +74,7 @@ class ItemEdit extends React.Component {
             .then(response => {
                 console.log(response)
                 this.props.toggleEdit();
+                window.location.reload();
             })
             .catch(error => {
                 console.log(error);
