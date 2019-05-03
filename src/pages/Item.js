@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, Button, CardText, CardHeader, CardColumns } from 'reactstrap';
 import axios from 'axios';
 import JournalNew from '../containers/JournalNew';
+import ItemEdit from '../containers/ItemEdit';
 import moment from 'moment';
 
 const token = localStorage.getItem('token');
@@ -17,11 +18,18 @@ class Item extends React.Component {
         };
 
         this.toggleNew = this.toggleNew.bind(this);
+        this.toggleEdit = this.toggleEdit.bind(this);
     }
 
     toggleNew() {
         this.setState(prevState => ({
             newModal: !prevState.newModal
+        }));
+    }
+
+    toggleEdit() {
+        this.setState(prevState => ({
+            editModal: !prevState.editModal
         }));
     }
 
@@ -84,7 +92,8 @@ class Item extends React.Component {
     render() {
         return (
             <div className="container">
-                <Button className="float-right" onClick={this.toggleNew} color="primary">Edit</Button>
+                <Button className="float-right" onClick={this.toggleEdit} color="primary">Edit</Button>
+                <ItemEdit isOpen={this.state.editModal} toggleEdit={this.toggleEdit} item_id={this.props.match.params.id} />
                 <h1>{this.state.item.title}</h1>
                 <h4>{moment(this.state.item.start_by).format('ll')}</h4>
                 <p>{this.state.item.category}</p>

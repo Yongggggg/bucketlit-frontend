@@ -72,7 +72,7 @@ class JournalNew extends React.Component {
                             <Col sm={10}>
                                 <Input type="textarea" name="reflection" id="reflection" onChange={this.handleInput} />
                             </Col>
-                        </FormGroup>>
+                        </FormGroup>
                     </Form>
                 </ModalBody>
                 <ModalFooter>
