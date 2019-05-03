@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Col, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import axios from 'axios';
 
 class JournalNew extends React.Component {
@@ -10,7 +10,6 @@ class JournalNew extends React.Component {
             title: '',
             date: '',
             reflection: '',
-            imageUrl: ''
 
         };
     }
@@ -25,6 +24,7 @@ class JournalNew extends React.Component {
     handleAdd = () => {
         this.props.toggleNew();
         const token = localStorage.getItem('token');
+        console.log(this.state.imageUrl)
 
         axios({
             method: 'POST',
@@ -36,7 +36,6 @@ class JournalNew extends React.Component {
                 title: this.state.title,
                 date: this.state.date,
                 reflection: this.state.reflection,
-                imageUrl: this.state.imageUrl
             }
         })
             .then(response => {
@@ -73,16 +72,7 @@ class JournalNew extends React.Component {
                             <Col sm={10}>
                                 <Input type="textarea" name="reflection" id="reflection" onChange={this.handleInput} />
                             </Col>
-                        </FormGroup>
-                        <FormGroup row>
-                            <Label for="image" sm={2}>Image</Label>
-                            <Col sm={10}>
-                                <Input type="file" name="imageUrl" id="single" />
-                                <FormText color="muted">
-                                    Only one image allowed
-                                </FormText>
-                            </Col>
-                        </FormGroup>
+                        </FormGroup>>
                     </Form>
                 </ModalBody>
                 <ModalFooter>

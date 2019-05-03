@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Button, CardTitle, CardText, Row, Col, CardHeader, CardImg, CardColumns } from 'reactstrap';
+import { Card, Button, CardText, CardHeader, CardColumns } from 'reactstrap';
 import axios from 'axios';
 import JournalNew from '../containers/JournalNew';
 import moment from 'moment';
@@ -14,11 +14,6 @@ class Item extends React.Component {
             journals: [],
             editModal: false,
             newModal: false,
-
-            journal_id: '',
-            journal_title: '',
-            journal_date: '',
-            journal_reflection: ''
         };
 
         this.toggleNew = this.toggleNew.bind(this);
@@ -40,7 +35,6 @@ class Item extends React.Component {
             }
         })
             .then(response => {
-                console.log(response)
                 this.setState({
                     item: response.data.item[0]
                 })
@@ -58,7 +52,6 @@ class Item extends React.Component {
             }
         })
             .then(response => {
-                console.log(response)
                 this.setState({
                     journals: response.data.journal
                 })
@@ -91,6 +84,7 @@ class Item extends React.Component {
     render() {
         return (
             <div className="container">
+                <Button className="float-right" onClick={this.toggleNew} color="primary">Edit</Button>
                 <h1>{this.state.item.title}</h1>
                 <h4>{moment(this.state.item.start_by).format('ll')}</h4>
                 <p>{this.state.item.category}</p>
@@ -102,9 +96,10 @@ class Item extends React.Component {
                     {this.state.journals.map(journal =>
                         <>
                             <Card body className="text-center">
-                                <CardHeader>{journal.title}</CardHeader>
-                                <CardImg width="100%" alt="Image" />
-                                <CardTitle>{moment(journal.date).format("LL")}</CardTitle>
+                                <CardHeader>
+                                    {journal.title} <br />
+                                    {moment(journal.date).format("LL")}
+                                </CardHeader>
                                 <CardText>{journal.reflection}</CardText>
                                 <Button outline color="danger" onClick={this.handleDelete} data-journal_id={journal.id}>Delete</Button>
                             </Card>
