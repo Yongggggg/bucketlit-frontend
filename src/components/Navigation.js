@@ -36,9 +36,6 @@ export default class Navigation extends React.Component {
                             <NavItem>
                                 <NavLink href="/register/">Register</NavLink>
                             </NavItem>
-                            <NavItem>
-                                <NavLink href="/profile/">Profile</NavLink>
-                            </NavItem>
                         </Nav>
                     </Collapse>
                 </Navbar>
