@@ -1,7 +1,6 @@
 import React from 'react';
 import { Col, Row, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import axios from 'axios';
-import { Redirect } from 'react-router-dom'
 
 export default class Register extends React.Component {
     state = {

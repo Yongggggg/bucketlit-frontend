@@ -27,16 +27,6 @@ class Profile extends React.Component {
 
     }
 
-    handleSeconds = () => {
-        const timer = setInterval(() => {
-            this.setState({
-                countdown: this.state.countdown + 1
-            })
-        }, 1000)
-    }
-
-
-
 
     render() {
         return (

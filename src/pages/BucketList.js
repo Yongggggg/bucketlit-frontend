@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { ListGroup, ListGroupItem, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { Row, Col, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import axios from 'axios';
+
 
 
 class BucketList extends React.Component {
@@ -12,8 +13,9 @@ class BucketList extends React.Component {
             modal: false,
             title: '',
             category: '',
-            completed_by: '',
+            start_by: '',
             description: '',
+            id: ''
         };
         this.toggle = this.toggle.bind(this);
     }
@@ -23,7 +25,7 @@ class BucketList extends React.Component {
 
         axios({
             method: 'GET',
-            url: 'http://localhost:5000/api/v1/bucketlists/',
+            url: 'http://localhost:5000/api/v1/items/',
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -57,11 +59,11 @@ class BucketList extends React.Component {
 
         axios({
             method: 'POST',
-            url: 'http://localhost:5000/api/v1/bucketlists/',
+            url: 'http://localhost:5000/api/v1/items/',
             data: {
                 title: this.state.title,
                 category: this.state.category,
-                completed_by: this.state.completed_by,
+                start_by: this.state.start_by,
                 description: this.state.description,
             },
             headers: {
@@ -77,13 +79,21 @@ class BucketList extends React.Component {
             })
     }
 
+    handleMore = (event) => {
+        let item_id = event.target.getAttribute('data-item_id');
+        this.setState({
+            id: item_id
+        })
+        console.log(this.state.id)
+    }
+
     render() {
         return (
             <>
                 <ListGroup>
                     <ListGroupItem><Button onClick={this.toggle} className="float-right" color="primary">New</Button><h1>My Bucket List</h1></ListGroupItem>
                     {this.state.bucket_lists.map(item =>
-                        <ListGroupItem>{item.title}</ListGroupItem>
+                        <ListGroupItem><a href={`/item/${item.id}`}>{item.title}</ a></ListGroupItem>
                     )}
                 </ListGroup>
                 <Modal isOpen={this.state.modal} toggle={this.toggle}>
@@ -101,11 +111,11 @@ class BucketList extends React.Component {
                                 />
                             </FormGroup>
                             <FormGroup>
-                                <Label for="completeDatetime">Completed By</Label>
+                                <Label for="startDatetime">Start By</Label>
                                 <Input
                                     type="date"
                                     name="date"
-                                    id="completed_by"
+                                    id="start_by"
                                     placeholder="date placeholder"
                                     onChange={this.handleInput}
                                 />
