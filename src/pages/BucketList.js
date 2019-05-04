@@ -178,7 +178,7 @@ class BucketList extends React.Component {
                             </FormGroup>
                             <FormGroup>
                                 <Label for="description">Description</Label>
-                                <Input type="textarea" name="text" id="description" />
+                                <Input type="textarea" name="text" id="description" onChange={this.handleInput} />
                             </FormGroup>
                         </Form>
                     </ModalBody>
