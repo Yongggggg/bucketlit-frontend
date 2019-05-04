@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Row, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 export default class Register extends React.Component {
     state = {
@@ -9,7 +9,8 @@ export default class Register extends React.Component {
         password: '',
         firstName: '',
         lastName: '',
-        dob: ''
+        dob: '',
+        redirect: false,
     }
 
     handleInput = (event) => {
@@ -35,7 +36,9 @@ export default class Register extends React.Component {
             .then(response => {
                 if (response.data.status === "success") {
                     console.log(response)
-                    window.location.reload();
+                    this.setState({
+                        redirect: true
+                    })
                 } else {
                     console.log("failed")
                 }
@@ -45,10 +48,17 @@ export default class Register extends React.Component {
             })
     }
 
+    renderRedirect = () => {
+        if (this.state.redirect) {
+            return <Redirect to='/login/' />
+        }
+    }
+
 
     render() {
         return (
             <div className="container">
+                {this.renderRedirect()}
                 <Form>
                     <h1>Register</h1>
                     <hr />
@@ -97,7 +107,7 @@ export default class Register extends React.Component {
                         />
                     </FormGroup>
                     <p>Already have an account? <a href='/login/'>Login</a></p>
-                    <Button onClick={this.handleSubmit} color="primary" className="float-right"><Link class='button' to='/login/'>Register</Link></Button>
+                    <Button onClick={this.handleSubmit} color="primary" className="float-right">Register</Button>
                 </Form>
             </div >
         );

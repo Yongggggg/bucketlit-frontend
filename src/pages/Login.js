@@ -1,13 +1,14 @@
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import axios from 'axios';
-import { Link } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import Navigation from '../components/Navigation'
 
 export default class Login extends React.Component {
     state = {
         email: '',
         password: '',
+        redirect: false,
     }
 
     handleInput = (event) => {
@@ -36,8 +37,9 @@ export default class Login extends React.Component {
                     localStorage.setItem('firstName', response.data.user['first_name']);
                     localStorage.setItem('lastName', response.data.user['last_name']);
                     localStorage.setItem('dob', response.data.user['dob']);
-
-                    window.location.reload();
+                    this.setState({
+                        redirect: true
+                    })
                 } else {
                     console.log("failed")
                 }
@@ -47,9 +49,16 @@ export default class Login extends React.Component {
             })
     }
 
+    renderRedirect = () => {
+        if (this.state.redirect) {
+            return <Redirect to='/' />
+        }
+    }
+
     render() {
         return (
             <>
+                {this.renderRedirect()}
                 <Navigation />
                 <div className="container">
                     <Form>
@@ -78,7 +87,7 @@ export default class Login extends React.Component {
                         </FormGroup>
 
                         <p>Don't have an account? <a href="/register/">Register</a></p>
-                        <Button onClick={this.handleSubmit} color="primary" className="float-right"><Link class='button' to='/'>Login</Link></Button>
+                        <Button onClick={this.handleSubmit} color="primary" className="float-right">Login</Button>
                     </Form>
                 </div >
             </>
