@@ -1,6 +1,8 @@
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import axios from 'axios';
+import { Link } from 'react-router-dom'
+import Navigation from '../components/Navigation'
 
 export default class Login extends React.Component {
     state = {
@@ -34,6 +36,8 @@ export default class Login extends React.Component {
                     localStorage.setItem('firstName', response.data.user['first_name']);
                     localStorage.setItem('lastName', response.data.user['last_name']);
                     localStorage.setItem('dob', response.data.user['dob']);
+
+                    window.location.reload();
                 } else {
                     console.log("failed")
                 }
@@ -45,35 +49,39 @@ export default class Login extends React.Component {
 
     render() {
         return (
-            <div className="container">
-                <Form>
-                    <h1>Login</h1>
-                    <hr />
-                    <FormGroup>
-                        <Label for="email">Email</Label>
-                        <Input
-                            type="email"
-                            name="email"
-                            id="email"
-                            placeholder="xxx@example.com"
-                            onChange={this.handleInput}
-                        />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="password">Password</Label>
-                        <Input
-                            type="password"
-                            name="password"
-                            id="password"
-                            placeholder="Password"
-                            onChange={this.handleInput}
-                        />
-                    </FormGroup>
+            <>
+                <Navigation />
+                <div className="container">
+                    <Form>
+                        <br />
+                        <h1>Login</h1>
+                        <hr />
+                        <FormGroup>
+                            <Label for="email">Email</Label>
+                            <Input
+                                type="email"
+                                name="email"
+                                id="email"
+                                placeholder="xxx@example.com"
+                                onChange={this.handleInput}
+                            />
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="password">Password</Label>
+                            <Input
+                                type="password"
+                                name="password"
+                                id="password"
+                                placeholder="Password"
+                                onChange={this.handleInput}
+                            />
+                        </FormGroup>
 
-                    <p>Don't have an account? <a href="/register/">Register</a></p>
-                    <Button onClick={this.handleSubmit} color="primary" className="float-right">Login</Button>
-                </Form>
-            </div >
+                        <p>Don't have an account? <a href="/register/">Register</a></p>
+                        <Button onClick={this.handleSubmit} color="primary" className="float-right"><Link class='button' to='/'>Login</Link></Button>
+                    </Form>
+                </div >
+            </>
         );
     }
 }
