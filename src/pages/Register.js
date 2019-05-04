@@ -1,6 +1,7 @@
 import React from 'react';
 import { Col, Row, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 export default class Register extends React.Component {
     state = {
@@ -34,6 +35,7 @@ export default class Register extends React.Component {
             .then(response => {
                 if (response.data.status === "success") {
                     console.log(response)
+                    window.location.reload();
                 } else {
                     console.log("failed")
                 }
@@ -95,7 +97,7 @@ export default class Register extends React.Component {
                         />
                     </FormGroup>
                     <p>Already have an account? <a href='/login/'>Login</a></p>
-                    <Button onClick={this.handleSubmit} color="primary" className="float-right">Register</Button>
+                    <Button onClick={this.handleSubmit} color="primary" className="float-right"><Link class='button' to='/'>Register</Link></Button>
                 </Form>
             </div >
         );

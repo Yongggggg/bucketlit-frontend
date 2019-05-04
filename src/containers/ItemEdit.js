@@ -130,6 +130,7 @@ class ItemEdit extends React.Component {
                         <FormGroup>
                             <Label for="category">Category</Label>
                             <Input type="select" name="select" id="category" value={this.state.category} onChange={this.handleInput}>
+                                <option>Select</option>
                                 <option>Lifestyle</option>
                                 <option>Self-Care</option>
                                 <option>Self-Satisfaction</option>

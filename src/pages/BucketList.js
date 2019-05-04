@@ -1,6 +1,6 @@
 import React from 'react';
 import { ListGroup, ListGroupItem, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, Badge } from 'reactstrap';
 import axios from 'axios';
 import Navigation from '../components/Navigation';
 
@@ -90,11 +90,35 @@ class BucketList extends React.Component {
     render() {
         return (
             <>
-            <Navigation />
+                <Navigation />
                 <ListGroup>
-                    <ListGroupItem><Button onClick={this.toggle} className="float-right" color="primary">New</Button><h1>My Bucket List</h1></ListGroupItem>
+                    <ListGroupItem><Button style={{ backgroundColor: '#F49F0A', border: 'white' }} onClick={this.toggle} className="float-right" color="primary">New</Button>
+                        <h1>My Bucket List</h1>
+                        <div>
+                            <Badge style={{ backgroundColor: '#d05353', color: '#023C40' }}>Lifestyle</Badge>
+                            <Badge style={{ backgroundColor: '#e58f65', color: '#023C40' }}>Travel</Badge>
+                            <Badge style={{ backgroundColor: '#f9e784', color: '#023C40' }}>Self-Satisfaction</Badge>
+                            <Badge style={{ backgroundColor: '#f1e8b8', color: '#023C40' }}>Self-Care</Badge>
+                            <Badge style={{ backgroundColor: '#F5F5F5', color: '#023C40' }} > Skills</Badge>
+                            <Badge style={{ backgroundColor: 'white', color: '#023C40' }} > Others</Badge>
+                        </div></ListGroupItem>
                     {this.state.bucket_lists.map(item =>
-                        <ListGroupItem><a href={`/item/${item.id}`}>{item.title}</ a></ListGroupItem>
+                        item.complete === true
+                            ? <ListGroupItem style={{ backgroundColor: '#e58f65' }}><strike><a class="linkA" href={`/item/${item.id}`}>{item.title}</ a></strike></ListGroupItem>
+                            : item.category === 'Travel'
+                                ? <ListGroupItem style={{ backgroundColor: '#e58f65' }}><a class="linkA" href={`/item/${item.id}`}>{item.title}</ a></ListGroupItem>
+                                : item.category === 'Lifestyle'
+                                    ? <ListGroupItem style={{ backgroundColor: '#d05353' }}><a class="linkA" href={`/item/${item.id}`}>{item.title}</ a></ListGroupItem>
+                                    : item.category === 'Self-Satisfaction'
+                                        ? <ListGroupItem style={{ backgroundColor: '#f9e784' }}><a class="linkA" href={`/item/${item.id}`}>{item.title}</ a></ListGroupItem>
+                                        : item.category === 'Self-Care'
+                                            ? <ListGroupItem style={{ backgroundColor: '#f1e8b8' }}><a class="linkA" href={`/item/${item.id}`}>{item.title}</ a></ListGroupItem>
+                                            : item.category === 'Skills'
+                                                ? <ListGroupItem style={{ backgroundColor: '#F5F5F5' }}><a class="linkA" href={`/item/${item.id}`}>{item.title}</ a></ListGroupItem>
+                                                : <ListGroupItem><a class="linkA" href={`/item/${item.id}`}>{item.title}</ a></ListGroupItem>
+
+
+
                     )}
                 </ListGroup>
                 <Modal isOpen={this.state.modal} toggle={this.toggle}>

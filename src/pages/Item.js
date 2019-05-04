@@ -100,15 +100,16 @@ class Item extends React.Component {
             <>
                 <Navigation />
                 <div className="container-fluid">
+                    <br />
 
-                    <h1>{this.state.item.title} <Button size="sm" onClick={this.toggleEdit} color="primary">Edit</Button></h1>
+                    <h1>{this.state.item.title} <Button size="sm" style={{ backgroundColor: '#F49F0A', border: 'white' }} onClick={this.toggleEdit} className='editButton'>Edit</Button></h1>
                     <ItemEdit isOpen={this.state.editModal} toggleEdit={this.toggleEdit} item_id={this.props.match.params.id} />
 
                     <h4>{moment(this.state.item.start_by).format('ll')} - {moment(this.state.item.completed_by).format('ll')}</h4>
-                    <p>{this.state.item.category}</p>
+                    <h6>{this.state.item.category}</h6>
                     <p>{this.state.item.description}</p>
 
-                    <Button onClick={this.toggleNew} color="primary">Add New Journal</Button>
+                    <Button onClick={this.toggleNew} style={{ backgroundColor: '#F49F0A', border: 'white' }}>Add New Journal</Button>
                     <JournalNew isOpen={this.state.newModal} toggleNew={this.toggleNew} item_id={this.props.match.params.id} />
                     <hr />
 
@@ -117,8 +118,8 @@ class Item extends React.Component {
                             <>
                                 <Card body className="text-center">
                                     <CardHeader>
-                                        {journal.title} <br />
-                                        {moment(journal.date).format("LL")}
+                                        <h6>{journal.title} </h6>
+                                        <h6>{moment(journal.date).format("LL")}</h6>
                                     </CardHeader>
                                     <CardText>{journal.reflection}</CardText>
                                     <Button outline color="danger" onClick={this.handleDelete} data-journal_id={journal.id}>Delete</Button>
