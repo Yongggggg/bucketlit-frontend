@@ -3,7 +3,9 @@ import { ListGroup, ListGroupItem, Modal, ModalHeader, ModalBody, ModalFooter } 
 import { Button, Form, FormGroup, Label, Input, Badge } from 'reactstrap';
 import axios from 'axios';
 import Navigation from '../components/Navigation';
+import { Link } from 'react-router-dom';
 
+const token = localStorage.getItem('token');
 
 class BucketList extends React.Component {
     constructor(props) {
@@ -15,13 +17,25 @@ class BucketList extends React.Component {
             category: '',
             start_by: '',
             description: '',
-            id: ''
+            id: '',
+            loggedIn: false,
+            message: '',
         };
         this.toggle = this.toggle.bind(this);
     }
 
     componentDidMount() {
-        const token = localStorage.getItem('token');
+        if (token) {
+            this.setState({
+                loggedIn: true,
+            })
+
+        } else {
+            this.setState({
+                loggedIn: false,
+            })
+        }
+
 
         axios({
             method: 'GET',
@@ -88,11 +102,15 @@ class BucketList extends React.Component {
     }
 
     render() {
+        let { loggedIn } = this.state;
+        let button = loggedIn === false
+            ? <Button style={{ backgroundColor: '#F49F0A', border: 'white' }} className="float-right" ><Link class="button" to='/login/'>Login</Link></Button>
+            : <Button style={{ backgroundColor: '#F49F0A', border: 'white' }} onClick={this.toggle} className="float-right" >New</Button>
         return (
             <>
                 <Navigation />
                 <ListGroup>
-                    <ListGroupItem><Button style={{ backgroundColor: '#F49F0A', border: 'white' }} onClick={this.toggle} className="float-right" color="primary">New</Button>
+                    <ListGroupItem> {button}
                         <h1>My Bucket List</h1>
                         <div>
                             <Badge style={{ backgroundColor: '#d05353', color: '#023C40' }}>Lifestyle</Badge>
@@ -101,7 +119,9 @@ class BucketList extends React.Component {
                             <Badge style={{ backgroundColor: '#f1e8b8', color: '#023C40' }}>Self-Care</Badge>
                             <Badge style={{ backgroundColor: '#F5F5F5', color: '#023C40' }} > Skills</Badge>
                             <Badge style={{ backgroundColor: 'white', color: '#023C40' }} > Others</Badge>
-                        </div></ListGroupItem>
+                        </div>
+                    </ListGroupItem>
+                    <ListGroupItem>Press item for more</ListGroupItem>
                     {this.state.bucket_lists.map(item =>
                         item.complete === true
                             ? <ListGroupItem style={{ backgroundColor: '#e58f65' }}><strike><a class="linkA" href={`/item/${item.id}`}>{item.title}</ a></strike></ListGroupItem>

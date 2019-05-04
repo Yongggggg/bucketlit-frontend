@@ -37,7 +37,6 @@ class Profile extends React.Component {
             this.countdown(this.state.date, 'seconds');
         }
 
-        var unirest = require('unirest');
 
         axios({
             // GET API for Quotes of the Day
@@ -83,20 +82,21 @@ class Profile extends React.Component {
     render() {
         let { loggedIn } = this.state;
         let message = loggedIn === false
-            ? <h6>Don't waste your time! Try <a class="link" href='/register/'>REGISTER</a> or <a class="link" href='/login/'>LOGIN</a>!</h6>
-            : <h6>Time is running out, why not live life to the fullest?</h6>
+            ? <h6>Don't waste your time! Try <a class="link" href='/register/'>REGISTER</a> or <a class="link" href='/login/'>LOGIN</a>!<br /> BucketLit let you record your journey in achieving Your Bucket List.</h6>
+            : <h6>Time is running out, why not live life to the fullest? <a class='link' href='/bucketlist/'>BucketList</a></h6>
         return (
             <>
                 <Navigation />
                 <div className="text-center container profile">
-                    <h2>{this.state.message.greeting} {this.state.firstName} {this.state.lastName} , {this.state.message.name}</h2>
+                    <h2>{this.state.message.greeting} {this.state.firstName} {this.state.lastName}, {this.state.message.name}</h2>
                     <h3>{this.state.message.frontCountdown}</h3>
                     <h2>{this.state.countdown}</h2>
                     <h3>{this.state.message.backCountdown}</h3>
                     {message}
                 </div>
                 <br />
-                <div className="container quote">
+                <div className="container quote text-center">
+                    <h6 class='font-italic'>Quote of the Day</h6>
                     <h4>{this.state.quotes.quote}</h4>
                     <h6 className='text-center'>
                         -- {this.state.quotes.author}

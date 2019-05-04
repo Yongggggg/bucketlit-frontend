@@ -35,7 +35,6 @@ h1, h2, h3, h4, h5, h6{
 
 .quote {
   background-image: linear-gradient(to bottom, #f9e0a1, #dbe5a7, #bfe7b5, #a6e7c8, #97e5db); 
-
   border-radius: 10px;
   padding: 20px;
   color: #F49F0A;
