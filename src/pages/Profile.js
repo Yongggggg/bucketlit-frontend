@@ -39,23 +39,23 @@ class Profile extends React.Component {
 
         var unirest = require('unirest');
 
-        // axios({
-        //     // GET API for Quotes of the Day
-        //     method: 'GET',
-        //     url: "https://andruxnet-random-famous-quotes.p.rapidapi.com/?cat=famous&count=10",
-        //     headers: {
-        //         "X-RapidAPI-Host": "andruxnet-random-famous-quotes.p.rapidapi.com",
-        //         "X-RapidAPI-Key": "db5c5d9abfmsh055b60003e7a964p1407dbjsnc5e7d6674725"
-        //     }
-        // })
-        //     .then(response => {
-        //         this.setState({
-        //             quotes: response.data[0]
-        //         })
-        //     })
-        //     .catch(error => {
-        //         console.log(error);
-        //     })
+        axios({
+            // GET API for Quotes of the Day
+            method: 'GET',
+            url: "https://andruxnet-random-famous-quotes.p.rapidapi.com/?cat=famous&count=10",
+            headers: {
+                "X-RapidAPI-Host": "andruxnet-random-famous-quotes.p.rapidapi.com",
+                "X-RapidAPI-Key": "db5c5d9abfmsh055b60003e7a964p1407dbjsnc5e7d6674725"
+            }
+        })
+            .then(response => {
+                this.setState({
+                    quotes: response.data[0]
+                })
+            })
+            .catch(error => {
+                console.log(error);
+            })
 
     }
 

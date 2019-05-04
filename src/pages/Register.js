@@ -23,7 +23,7 @@ export default class Register extends React.Component {
 
         axios({
             method: 'POST',
-            url: 'http://localhost:5000/api/v1/users/',
+            url: 'https://bucketlit.herokuapp.com/api/v1/users/',
             data: {
                 email: this.state.email,
                 password: this.state.password,
@@ -97,7 +97,7 @@ export default class Register extends React.Component {
                         />
                     </FormGroup>
                     <p>Already have an account? <a href='/login/'>Login</a></p>
-                    <Button onClick={this.handleSubmit} color="primary" className="float-right"><Link class='button' to='/'>Register</Link></Button>
+                    <Button onClick={this.handleSubmit} color="primary" className="float-right"><Link class='button' to='/login/'>Register</Link></Button>
                 </Form>
             </div >
         );

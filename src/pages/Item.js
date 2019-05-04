@@ -41,7 +41,7 @@ class Item extends React.Component {
         axios({
             // GET Item Data 
             method: 'GET',
-            url: `http://localhost:5000/api/v1/items/${this.props.match.params.id}/`,
+            url: `https://bucketlit.herokuapp.com/api/v1/items/${this.props.match.params.id}/`,
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -60,7 +60,7 @@ class Item extends React.Component {
         axios({
             // GET Journal Data
             method: 'GET',
-            url: `http://localhost:5000/api/v1/journals/${this.props.match.params.id}/`,
+            url: `https://bucketlit.herokuapp.com/api/v1/journals/${this.props.match.params.id}/`,
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -79,7 +79,7 @@ class Item extends React.Component {
         let journal_id = event.target.getAttribute('data-journal_id');
         axios({
             method: 'DELETE',
-            url: `http://localhost:5000/api/v1/journals/delete/${journal_id}/`,
+            url: `https://bucketlit.herokuapp.com/api/v1/journals/delete/${journal_id}/`,
             headers: {
                 'Authorization': `Bearer ${token}`
             }

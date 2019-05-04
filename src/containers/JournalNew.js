@@ -28,7 +28,7 @@ class JournalNew extends React.Component {
 
         axios({
             method: 'POST',
-            url: `http://localhost:5000/api/v1/journals/${this.props.item_id}/`,
+            url: `https://bucketlit.herokuapp.com/api/v1/journals/${this.props.item_id}/`,
             headers: {
                 'Authorization': `Bearer ${token}`
             },

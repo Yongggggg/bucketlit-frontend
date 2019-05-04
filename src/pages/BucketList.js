@@ -25,7 +25,7 @@ class BucketList extends React.Component {
 
         axios({
             method: 'GET',
-            url: 'http://localhost:5000/api/v1/items/',
+            url: 'https://bucketlit.herokuapp.com/api/v1/items/',
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -59,7 +59,7 @@ class BucketList extends React.Component {
 
         axios({
             method: 'POST',
-            url: 'http://localhost:5000/api/v1/items/',
+            url: 'https://bucketlit.herokuapp.com/api/v1/items/',
             data: {
                 title: this.state.title,
                 category: this.state.category,

@@ -26,7 +26,7 @@ class ItemEdit extends React.Component {
 
         axios({
             method: 'GET',
-            url: `http://localhost:5000/api/v1/items/${this.props.item_id}/`,
+            url: `https://bucketlit.herokuapp.com/api/v1/items/${this.props.item_id}/`,
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -58,7 +58,7 @@ class ItemEdit extends React.Component {
     handleSubmit = () => {
         axios({
             method: 'PUT',
-            url: `http://localhost:5000/api/v1/items/${this.props.item_id}/`,
+            url: `https://bucketlit.herokuapp.com/api/v1/items/${this.props.item_id}/`,
             headers: {
                 'Authorization': `Bearer ${token}`
             },
